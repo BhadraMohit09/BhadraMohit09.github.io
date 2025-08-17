@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, memo } from "react";
 
-// 🔹 SadFileIcon (fake broken file icon, styled like Chrome's error page)
-const SadFileIcon = () => (
+// Memoized SadFileIcon
+const SadFileIcon = memo(() => (
   <svg
-    width="64"
-    height="64"
+    width="48"
+    height="48"
     viewBox="0 0 48 48"
     aria-hidden="true"
     className="shrink-0"
@@ -17,25 +17,69 @@ const SadFileIcon = () => (
       <path d="M18 31c2.2-2 9.8-2 12 0" strokeLinecap="round" />
     </g>
   </svg>
+));
+
+// TopBar
+const TopBar = ({ host }) => (
+  <div className="h-10 border-b border-gray-200 flex items-center px-3 gap-2 bg-gray-50">
+    <div className="flex gap-2">
+      <span className="h-3 w-3 rounded-full bg-red-500" />
+      <span className="h-3 w-3 rounded-full bg-yellow-500" />
+      <span className="h-3 w-3 rounded-full bg-green-500" />
+    </div>
+    <div className="flex-1 flex justify-center">
+      <div className="w-full max-w-md border border-gray-300 rounded-md px-2 py-0.5 text-xs text-gray-500 truncate">
+        https://{host}/
+      </div>
+    </div>
+  </div>
+);
+
+// Footer
+const Footer = ({ host }) => (
+  <div className="border-t border-gray-200 p-2 text-xs text-gray-500 text-center">
+    © 2025 MBTech
+  </div>
 );
 
 const FakeErrorSplash = ({
   children,
-  delay = 0, // if > 0, auto hides splash after delay (ms)
-  domain, // defaults to current host
-  showTopBar = true, // fake browser top bar
-  errorCode = "SUCC_CONNECTION_OPENED", // fake error code
+  delay = 0,
+  domain,
+  showTopBar = true,
+  errorCode = "SUCC_CONNECTION_OPENED",
 }) => {
   const [show, setShow] = useState(true);
-  const [progress, setProgress] = useState(0); // fake loading progress
+  const [progress, setProgress] = useState(0);
+  const [scrollY, setScrollY] = useState(0);
 
   const host =
-    domain ||
-    (typeof window !== "undefined"
-      ? window.location.host
-      : "yourdomain.vercel.app");
+    domain || (typeof window !== "undefined" ? window.location.host : "yourdomain.vercel.app");
 
-  // 🔹 Auto-hide with delay (if provided)
+  // Lock scroll and prevent jump
+  useEffect(() => {
+    if (show) {
+      setScrollY(window.scrollY);
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${window.scrollY}px`;
+      document.body.style.width = "100%";
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.width = "";
+      document.body.style.overflow = "";
+      window.scrollTo(0, scrollY); // restore scroll
+    }
+    return () => {
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.width = "";
+      document.body.style.overflow = "";
+    };
+  }, [show, scrollY]);
+
+  // Auto-hide splash after delay
   useEffect(() => {
     if (delay > 0) {
       const t = setTimeout(() => setShow(false), delay);
@@ -43,24 +87,24 @@ const FakeErrorSplash = ({
     }
   }, [delay]);
 
-  // 🔹 Fake progress bar effect
+  // Smooth progress bar
   useEffect(() => {
     if (!show) return;
     let val = 0;
     const id = setInterval(() => {
-      val = Math.min(val + Math.random() * 20, 100);
-      setProgress(Math.floor(val));
+      val = Math.min(val + Math.random() * 10 + 5, 100);
+      setProgress(val);
       if (val >= 100) clearInterval(id);
-    }, 500);
+    }, 200);
     return () => clearInterval(id);
   }, [show]);
 
   return (
     <div className="relative">
-      {/* Main app (hidden until splash ends) */}
+      {/* Main content */}
       <div
-        className={`transition-opacity duration-500 ${
-          show ? "opacity-0 pointer-events-none" : "opacity-100"
+        className={`transition-all duration-500 ${
+          show ? "opacity-0 scale-95 blur-sm pointer-events-none" : "opacity-100 scale-100 blur-0"
         }`}
       >
         {children}
@@ -73,87 +117,57 @@ const FakeErrorSplash = ({
           aria-live="assertive"
           className="fixed inset-0 z-[9999] bg-white text-gray-800 flex flex-col"
         >
-          {/* Fake top bar like a browser */}
-          {showTopBar && (
-            <div className="h-12 border-b border-gray-200 flex items-center px-4 gap-3 bg-gray-50">
-              <div className="flex gap-2">
-                <span className="h-3 w-3 rounded-full bg-red-500" />
-                <span className="h-3 w-3 rounded-full bg-yellow-500" />
-                <span className="h-3 w-3 rounded-full bg-green-500" />
-              </div>
-              <div className="flex-1 flex justify-center">
-                <div className="w-full max-w-2xl border border-gray-300 rounded-md px-3 py-1 text-sm text-gray-500 truncate">
-                  https://{host}/
-                </div>
-              </div>
-            </div>
-          )}
+          {showTopBar && <TopBar host={host} />}
 
           {/* Body */}
-          <div className="flex-1 flex items-center justify-center px-6">
-            <div className="max-w-3xl w-full">
-              <div className="flex items-start gap-6">
-                <SadFileIcon />
+          <div className="flex-1 flex items-center justify-center px-4">
+            <div className="max-w-2xl w-full flex flex-col md:flex-row items-start gap-4">
+              <SadFileIcon />
 
-                <div>
-                  <h1 className="text-2xl md:text-[28px] leading-snug">
-                    This site{" "}
-                    <span className="font-semibold">actually can</span> be
-                    reached
-                  </h1>
+              <div>
+                <h1 className="text-base font-medium leading-snug">
+                  This site <span className="font-semibold">actually can</span> be reached
+                </h1>
 
-                  <p className="mt-2 text-gray-600">
-                    <span className="font-mono">{host}</span> unexpectedly{" "}
-                    <span className="font-semibold">opened</span> the
-                    connection.
-                  </p>
+                <p className="mt-1 text-gray-600 text-sm">
+                  <span className="font-mono">{host}</span> unexpectedly{" "}
+                  <span className="font-semibold">opened</span> the connection.
+                </p>
 
-                  {/* Fake suggestions */}
-                  <div className="mt-6">
-                    <p className="text-gray-500">Try:</p>
-                    <ul className="mt-2 space-y-2">
-                      <li className="text-gray-400">
-                        • Checking the connection
-                      </li>
-                      <li className="text-blue-600">
-                        • Checking the proxy and the firewall
-                      </li>
-                      <li className="text-blue-600">
-                        • Running Windows Network Diagnostics
-                      </li>
-                      <li className="text-gray-400">• Restarting your router</li>
-                    </ul>
-                  </div>
-
-                  {/* Error code */}
-                  <p className="mt-6 text-gray-400 font-semibold tracking-wide">
-                    {errorCode}
-                  </p>
-
-                  {/* Fake progress bar */}
-                  <div className="mt-4 w-full h-2 bg-gray-200 rounded overflow-hidden">
-                    <div
-                      style={{ width: `${progress}%` }}
-                      className="h-full bg-blue-600 transition-all duration-300"
-                    />
-                  </div>
-
-                  {/* Start button */}
-                  <button
-                    onClick={() => setShow(false)}
-                    className="mt-6 inline-flex items-center justify-center rounded-md bg-blue-600 px-5 py-2.5 text-white font-medium shadow-sm transition hover:bg-blue-700"
-                  >
-                    Start
-                  </button>
+                {/* Suggestions */}
+                <div className="mt-4">
+                  <p className="text-gray-500 text-sm">Try:</p>
+                  <ul className="mt-1 space-y-1 text-sm">
+                    <li className="text-gray-400">• Checking the connection</li>
+                    <li className="text-blue-600">• Checking the proxy and the firewall</li>
+                    <li className="text-blue-600">• Running Windows Network Diagnostics</li>
+                    <li className="text-gray-400">• Restarting your router</li>
+                  </ul>
                 </div>
+
+                {/* Error code */}
+                <p className="mt-4 text-gray-400 font-semibold text-xs tracking-wide">{errorCode}</p>
+
+                {/* Progress bar */}
+                <div className="mt-2 w-full h-2 bg-gray-200 rounded overflow-hidden">
+                  <div
+                    style={{ width: `${progress}%` }}
+                    className="h-full bg-blue-600 transition-all duration-300"
+                  />
+                </div>
+
+                {/* Start button */}
+                <button
+                  onClick={() => setShow(false)}
+                  className="mt-3 inline-flex items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-white text-sm font-medium shadow-sm transition hover:bg-blue-700"
+                >
+                  Start
+                </button>
               </div>
             </div>
           </div>
 
-          {/* Fake footer (like browser) */}
-          <div className="border-t border-gray-200 p-3 text-xs text-gray-500 text-center">
-            © 2025 {host} · Fake Splash Error Simulation
-          </div>
+          <Footer host={host} />
         </div>
       )}
     </div>
