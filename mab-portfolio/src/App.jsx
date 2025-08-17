@@ -228,7 +228,7 @@ function App() {
 
   return (
     <>
-      <FakeErrorSplash delay={3500}>
+      <FakeErrorSplash delay={4000}>
         <div className="bg-slate-900 text-gray-300 min-h-screen relative p-1">
           {/* Navigation */}
           <nav className="fixed top-0 left-0 right-0 bg-slate-900/80 backdrop-blur-md border-b border-slate-700 z-50 transition-all duration-300">
