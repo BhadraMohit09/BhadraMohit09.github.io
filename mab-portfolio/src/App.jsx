@@ -305,7 +305,7 @@ function App() {
                   <div className="w-48 h-48 mx-auto rounded-full bg-gradient-to-r from-purple-500 to-blue-500 p-1 shadow-2xl shadow-purple-500/20">
                     <div className="w-full h-full rounded-full bg-slate-800 flex items-center justify-center overflow-hidden">
                       <img
-                        src="https://media.licdn.com/dms/image/v2/D4D03AQG9bDHvwq3WBQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1731600725551?e=1758153600&v=beta&t=OqdkYy_7PBPhmZYE-F6jCiy7h2-03yPkV3RS3pLx0P4"
+                        src="/astronaut.jpeg"
                         alt="Bhadra Mohit"
                         className="w-full h-full object-cover rounded-full"
                       />
