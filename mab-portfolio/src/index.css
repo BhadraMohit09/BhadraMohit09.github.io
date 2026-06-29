@@ -80,3 +80,12 @@ button, a, input, textarea {
 .skill-bar {
   animation: fillSkillBar 1.5s ease-out;
 }
+
+@keyframes barrelRoll {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.animate-barrel-roll {
+  animation: barrelRoll 1.5s ease-in-out;
+}

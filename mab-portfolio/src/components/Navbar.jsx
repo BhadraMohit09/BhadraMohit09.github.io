@@ -84,10 +84,10 @@ const Navbar = () => {
     <>
       <nav
         ref={menuRef}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 backdrop-blur-xl border-b ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           isScrolled
-            ? 'bg-slate-950/85 border-white/[0.12] shadow-2xl shadow-purple-950/30 py-0'
-            : 'bg-slate-950/45 border-white/[0.08] shadow-lg shadow-black/20 py-1.5'
+            ? 'bg-slate-950/35 backdrop-blur-2xl border-b border-white/[0.15] shadow-2xl shadow-purple-950/40 py-2.5'
+            : 'bg-transparent border-b border-transparent py-4'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

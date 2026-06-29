@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Globe, Send, CheckCircle, AlertCircle } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
 
@@ -53,16 +54,28 @@ const Contact = () => {
 
       <section className="py-20 bg-slate-900 min-h-[calc(100vh-4rem)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
+          <motion.div
+            initial={{ opacity: 0, y: -40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="text-center mb-16"
+          >
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Let's Work Together</h1>
             <p className="text-lg text-gray-400 max-w-3xl mx-auto">
               Have a project in mind? Let's discuss how we can bring your ideas to life. I'm always excited to take on new challenges.
             </p>
-          </div>
+          </motion.div>
 
           <div className="grid lg:grid-cols-2 gap-16">
             {/* Left: contact info */}
-            <div className="space-y-8">
+            <motion.div
+              initial={{ opacity: 0, x: -60 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, ease: "easeOut" }}
+              className="space-y-8"
+            >
               <div>
                 <h2 className="text-2xl font-bold text-white mb-4">Get in Touch</h2>
                 <p className="text-gray-400 text-lg leading-relaxed">
@@ -103,10 +116,16 @@ const Contact = () => {
                   I'm open to freelance projects, part-time contracts, and full-time opportunities. Typical response time: within 24 hours.
                 </p>
               </div>
-            </div>
+            </motion.div>
 
             {/* Right: form */}
-            <div className="bg-slate-800/50 rounded-3xl p-8 border border-slate-700">
+            <motion.div
+              initial={{ opacity: 0, x: 60 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
+              className="bg-slate-800/50 rounded-3xl p-8 border border-slate-700"
+            >
               <form onSubmit={handleSubmit} className="space-y-6" id="contact-form">
                 <div>
                   <label htmlFor="contact-name" className="block text-sm font-semibold text-gray-300 mb-2">
@@ -191,7 +210,7 @@ const Contact = () => {
                   </div>
                 )}
               </form>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>

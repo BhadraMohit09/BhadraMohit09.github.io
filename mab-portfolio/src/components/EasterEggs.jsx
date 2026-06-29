@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Terminal, Sparkles, X, Play, ShieldAlert, PartyPopper, CheckCircle, HelpCircle } from 'lucide-react';
+import { Terminal, Sparkles, X, Play, ShieldAlert, PartyPopper, CheckCircle, HelpCircle, Gamepad2, Quote, RefreshCw } from 'lucide-react';
 
 /* ─── Matrix Rain Overlay Component ─── */
 const MatrixRain = ({ onClose }) => {
@@ -53,9 +53,9 @@ const MatrixRain = ({ onClose }) => {
     <div className="fixed inset-0 z-[100] bg-black/90 animate-fadeIn flex flex-col justify-between p-6 pointer-events-auto">
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" />
       <div className="relative z-10 flex justify-between items-center bg-slate-900/80 backdrop-blur-md px-6 py-4 rounded-2xl border border-green-500/30">
-        <div className="flex items-center gap-3 text-green-400 font-mono text-sm md:text-base">
+        <div className="flex items-center gap-3 text-green-400 font-mono text-sm md:text-base font-bold">
           <span className="w-3 h-3 rounded-full bg-green-400 animate-ping" />
-          <span>MATRIX MODE ACTIVATED: Digital Rain Protocol [MOHIT_OS v3.1]</span>
+          <span>MATRIX MODE ACTIVATED: Digital Rain Protocol [MOHIT_OS v3.2]</span>
         </div>
         <button
           onClick={onClose}
@@ -63,6 +63,99 @@ const MatrixRain = ({ onClose }) => {
         >
           <X className="w-4 h-4" /> Exit Matrix
         </button>
+      </div>
+    </div>
+  );
+};
+
+/* ─── Retro Cyber Snake Game Component ─── */
+const SnakeGame = ({ onClose }) => {
+  const [snake, setSnake] = useState([[10, 10], [10, 11]]);
+  const [food, setFood] = useState([5, 5]);
+  const [direction, setDirection] = useState('UP');
+  const [gameOver, setGameOver] = useState(false);
+  const [score, setScore] = useState(0);
+
+  useEffect(() => {
+    const handleKey = (e) => {
+      if (['ArrowUp', 'w', 'W'].includes(e.key) && direction !== 'DOWN') setDirection('UP');
+      if (['ArrowDown', 's', 'S'].includes(e.key) && direction !== 'UP') setDirection('DOWN');
+      if (['ArrowLeft', 'a', 'A'].includes(e.key) && direction !== 'RIGHT') setDirection('LEFT');
+      if (['ArrowRight', 'd', 'D'].includes(e.key) && direction !== 'LEFT') setDirection('RIGHT');
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [direction]);
+
+  useEffect(() => {
+    if (gameOver) return;
+    const interval = setInterval(() => {
+      setSnake((prev) => {
+        const head = [...prev[0]];
+        if (direction === 'UP') head[1] -= 1;
+        if (direction === 'DOWN') head[1] += 1;
+        if (direction === 'LEFT') head[0] -= 1;
+        if (direction === 'RIGHT') head[0] += 1;
+
+        if (head[0] < 0 || head[0] >= 20 || head[1] < 0 || head[1] >= 20 || prev.some(seg => seg[0] === head[0] && seg[1] === head[1])) {
+          setGameOver(true);
+          return prev;
+        }
+
+        const newSnake = [head, ...prev];
+        if (head[0] === food[0] && head[1] === food[1]) {
+          setScore(s => s + 10);
+          setFood([Math.floor(Math.random() * 20), Math.floor(Math.random() * 20)]);
+        } else {
+          newSnake.pop();
+        }
+        return newSnake;
+      });
+    }, 120);
+    return () => clearInterval(interval);
+  }, [direction, food, gameOver]);
+
+  return (
+    <div className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-md flex items-center justify-center p-4 animate-fadeIn">
+      <div className="bg-slate-950 border border-purple-500/50 p-6 rounded-3xl max-w-md w-full shadow-2xl flex flex-col items-center">
+        <div className="w-full flex justify-between items-center mb-4">
+          <div className="flex items-center gap-2 text-purple-400 font-bold">
+            <Gamepad2 className="w-5 h-5 animate-bounce" /> Cyber Snake
+          </div>
+          <span className="text-green-400 font-mono font-bold">Score: {score}</span>
+          <button onClick={onClose} className="text-gray-400 hover:text-white"><X className="w-5 h-5" /></button>
+        </div>
+
+        <div className="w-[300px] h-[300px] bg-slate-900 border-2 border-purple-500/30 relative grid grid-cols-20 grid-rows-20 rounded-xl overflow-hidden shadow-inner">
+          {Array.from({ length: 400 }).map((_, i) => {
+            const x = i % 20;
+            const y = Math.floor(i / 20);
+            const isSnake = snake.some(s => s[0] === x && s[1] === y);
+            const isHead = snake[0][0] === x && snake[0][1] === y;
+            const isFood = food[0] === x && food[1] === y;
+            return (
+              <div
+                key={i}
+                className={`w-full h-full ${
+                  isHead ? 'bg-purple-400 rounded-sm' : isSnake ? 'bg-purple-600/80' : isFood ? 'bg-green-400 rounded-full animate-ping' : ''
+                }`}
+              />
+            );
+          })}
+        </div>
+
+        {gameOver && (
+          <div className="mt-4 text-center">
+            <p className="text-red-400 font-bold mb-2">Game Over! Final Score: {score}</p>
+            <button
+              onClick={() => { setSnake([[10, 10], [10, 11]]); setScore(0); setGameOver(false); }}
+              className="bg-purple-600 hover:bg-purple-500 text-white px-4 py-1.5 rounded-xl text-sm font-bold transition-all"
+            >
+              Play Again
+            </button>
+          </div>
+        )}
+        <p className="text-gray-500 text-xs mt-4">Use Arrow keys or W/A/S/D to move</p>
       </div>
     </div>
   );
@@ -113,14 +206,16 @@ const ConfettiExplosion = ({ onClose }) => {
 const EasterEggs = () => {
   const [typedBuffer, setTypedBuffer] = useState('');
   const [showMatrix, setShowMatrix] = useState(false);
+  const [showSnake, setShowSnake] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   const [partyMode, setPartyMode] = useState(false);
+  const [isFlipped, setIsFlipped] = useState(false);
   const [toastMessage, setToastMessage] = useState(null);
   const [isTerminalOpen, setIsTerminalOpen] = useState(false);
   const [terminalInput, setTerminalInput] = useState('');
   const [terminalLogs, setTerminalLogs] = useState([
-    { type: 'sys', text: '⚡ Welcome to Mohit Developer Terminal [v1.0.4]' },
-    { type: 'sys', text: 'Type "help" to see secret commands and easter egg codes.' },
+    { type: 'sys', text: '⚡ Welcome to Mohit Developer Terminal [v3.2.0]' },
+    { type: 'sys', text: 'Type "help" or click quick action buttons below to explore hidden Easter Eggs!' },
   ]);
 
   const navigate = useNavigate();
@@ -143,6 +238,11 @@ const EasterEggs = () => {
             triggerToast('🟩 Matrix Easter Egg Unlocked!');
             return '';
           }
+          if (next.endsWith('snake')) {
+            setShowSnake(true);
+            triggerToast('🕹️ Retro Snake Game Unlocked!');
+            return '';
+          }
           if (next.endsWith('mohit') || next.endsWith('easter')) {
             setShowConfetti(true);
             triggerToast('🎉 Secret Code Unlocked: Welcome to Mohit\'s Cyber Lab!');
@@ -155,6 +255,12 @@ const EasterEggs = () => {
             setTimeout(() => setPartyMode(false), 5000);
             return '';
           }
+          if (next.endsWith('flip')) {
+            setIsFlipped(true);
+            triggerToast('🙃 Do a barrel roll!');
+            setTimeout(() => setIsFlipped(false), 1500);
+            return '';
+          }
           return next;
         });
       }
@@ -164,20 +270,24 @@ const EasterEggs = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  const handleTerminalSubmit = (e) => {
-    e.preventDefault();
-    const cmd = terminalInput.trim().toLowerCase();
+  const runCommand = (cmdStr) => {
+    const cmd = cmdStr.trim().toLowerCase();
     if (!cmd) return;
 
     const newLogs = [...terminalLogs, { type: 'user', text: `> ${cmd}` }];
 
     switch (cmd) {
       case 'help':
-        newLogs.push({ type: 'res', text: 'Available commands:\n  matrix   - Launch Matrix digital rain overlay\n  party    - Trigger 5s party disco glow\n  confetti - Launch celebratory confetti burst\n  skills   - List Mohit\'s core tech stack\n  resume   - Navigate to career timeline page\n  hire     - Navigate to contact page\n  clear    - Clear terminal screen' });
+        newLogs.push({ type: 'res', text: 'Available secret commands:\n  matrix   - Launch Matrix digital rain overlay\n  snake    - Play playable Cyber Snake game\n  party    - Trigger 5s disco party glow\n  confetti - Launch celebratory confetti burst\n  hack     - Run mainframe penetration simulation\n  flip     - Do a 360-degree barrel roll\n  quote    - Output tech inspirational quote\n  skills   - List Mohit\'s core tech stack\n  resume   - Navigate to career timeline page\n  hire     - Navigate to contact page\n  clear    - Clear terminal screen' });
         break;
       case 'matrix':
         setShowMatrix(true);
         newLogs.push({ type: 'res', text: 'Launching Matrix rain protocol...' });
+        setIsTerminalOpen(false);
+        break;
+      case 'snake':
+        setShowSnake(true);
+        newLogs.push({ type: 'res', text: 'Loading Cyber Snake...' });
         setIsTerminalOpen(false);
         break;
       case 'party':
@@ -189,6 +299,24 @@ const EasterEggs = () => {
       case 'confetti':
         setShowConfetti(true);
         newLogs.push({ type: 'res', text: '🎉 Confetti fired!' });
+        break;
+      case 'hack':
+        newLogs.push({ type: 'sys', text: 'Bypassing firewalls... [██████████] 100%' });
+        newLogs.push({ type: 'res', text: '🔥 ACCESS GRANTED: Mohit Bhadra is the optimal hire for your engineering team!' });
+        break;
+      case 'flip':
+      case 'barrelroll':
+        setIsFlipped(true);
+        setTimeout(() => setIsFlipped(false), 1500);
+        newLogs.push({ type: 'res', text: '🙃 Barrel roll initiated!' });
+        break;
+      case 'quote':
+        const quotes = [
+          '"First, solve the problem. Then, write the code." – John Johnson',
+          '"Code is like humor. When you have to explain it, it’s bad." – Cory House',
+          '"Simplicity is the soul of efficiency." – Austin Freeman'
+        ];
+        newLogs.push({ type: 'res', text: `💡 ${quotes[Math.floor(Math.random() * quotes.length)]}` });
         break;
       case 'skills':
         newLogs.push({ type: 'res', text: 'Core Stack: ReactJS, Node.js, Express, .NET Core / C#, Python ML, MongoDB, Docker, AWS.' });
@@ -214,10 +342,16 @@ const EasterEggs = () => {
     setTerminalInput('');
   };
 
+  const handleTerminalSubmit = (e) => {
+    e.preventDefault();
+    runCommand(terminalInput);
+  };
+
   return (
-    <>
+    <div className={isFlipped ? 'animate-barrel-roll' : ''}>
       {/* Active Overlays */}
       {showMatrix && <MatrixRain onClose={() => setShowMatrix(false)} />}
+      {showSnake && <SnakeGame onClose={() => setShowSnake(false)} />}
       {showConfetti && <ConfettiExplosion onClose={() => setShowConfetti(false)} />}
 
       {/* Party Mode Global Flash */}
@@ -238,7 +372,7 @@ const EasterEggs = () => {
         <button
           onClick={() => setIsTerminalOpen(true)}
           className="group relative flex items-center gap-2 bg-slate-900/90 hover:bg-purple-600 text-purple-400 hover:text-white border border-purple-500/30 px-4 py-2.5 rounded-full shadow-lg shadow-purple-500/20 backdrop-blur-md transition-all duration-300 hover:scale-105"
-          title="Type 'matrix', 'mohit', or click for Secret Terminal"
+          title="Type 'matrix', 'snake', 'flip', or click for Secret Terminal"
         >
           <Terminal className="w-4 h-4 animate-pulse text-green-400 group-hover:text-white" />
           <span className="text-xs font-bold tracking-wider uppercase">🕹️ Secret Easter Eggs</span>
@@ -248,7 +382,7 @@ const EasterEggs = () => {
       {/* Terminal Modal */}
       {isTerminalOpen && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 animate-fadeIn">
-          <div className="bg-slate-950 border border-purple-500/40 w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden flex flex-col h-[480px]">
+          <div className="bg-slate-950 border border-purple-500/40 w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden flex flex-col h-[520px]">
             
             {/* Terminal Header */}
             <div className="bg-slate-900 px-4 py-3 border-b border-white/10 flex justify-between items-center">
@@ -264,6 +398,27 @@ const EasterEggs = () => {
               >
                 <X className="w-4 h-4" />
               </button>
+            </div>
+
+            {/* Quick Actions Bar */}
+            <div className="bg-slate-900/60 px-4 py-2 border-b border-white/5 flex flex-wrap gap-2 items-center">
+              <span className="text-[10px] font-bold uppercase text-gray-400">Quick Hacks:</span>
+              {[
+                { label: '🟩 Matrix', cmd: 'matrix' },
+                { label: '🕹️ Snake', cmd: 'snake' },
+                { label: '🔥 Hack', cmd: 'hack' },
+                { label: '🙃 Flip', cmd: 'flip' },
+                { label: '🪩 Party', cmd: 'party' },
+                { label: '💡 Quote', cmd: 'quote' },
+              ].map(btn => (
+                <button
+                  key={btn.cmd}
+                  onClick={() => runCommand(btn.cmd)}
+                  className="bg-purple-950/60 hover:bg-purple-600 text-purple-300 hover:text-white border border-purple-500/30 px-2.5 py-1 rounded-lg text-xs font-bold transition-all"
+                >
+                  {btn.label}
+                </button>
+              ))}
             </div>
 
             {/* Logs Body */}
@@ -282,13 +437,13 @@ const EasterEggs = () => {
                 type="text"
                 value={terminalInput}
                 onChange={(e) => setTerminalInput(e.target.value)}
-                placeholder="Type 'help', 'matrix', 'skills', 'resume', 'hire'..."
+                placeholder="Type 'help', 'snake', 'hack', 'matrix', 'flip'..."
                 className="flex-1 bg-transparent border-none outline-none text-white font-mono text-sm placeholder-gray-500"
                 autoFocus
               />
               <button
                 type="submit"
-                className="bg-purple-600 hover:bg-purple-500 text-white px-4 py-1.5 rounded-lg text-xs font-bold transition-all"
+                className="bg-purple-600 hover:bg-purple-500 text-white px-4 py-1.5 rounded-xl text-xs font-bold transition-all shadow-md"
               >
                 Run
               </button>
@@ -297,7 +452,7 @@ const EasterEggs = () => {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

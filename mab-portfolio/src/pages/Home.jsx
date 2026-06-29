@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import {
   Github, Linkedin, Mail, Send, ExternalLink,
@@ -273,12 +274,18 @@ const Home = () => {
       <section className="py-20 bg-slate-900/60 border-y border-slate-800/80 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-purple-900/5 via-transparent to-blue-900/5" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center mb-12">
+          <motion.div
+            initial={{ opacity: 0, y: -40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="text-center mb-12"
+          >
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-3">What I Build</h2>
             <p className="text-gray-400 text-base max-w-xl mx-auto">
               End-to-end product development — from pixel-perfect UIs to production-grade backends.
             </p>
-          </div>
+          </motion.div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {[
@@ -336,9 +343,13 @@ const Home = () => {
                 border: 'border-pink-500/20',
                 iconBg: 'bg-pink-500/15 text-pink-300',
               },
-            ].map(({ icon, title, desc, tags, color, border, iconBg }) => (
-              <div
+            ].map(({ icon, title, desc, tags, color, border, iconBg }, idx) => (
+              <motion.div
                 key={title}
+                initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.5, delay: idx * 0.1, ease: "easeOut" }}
                 className={`group relative p-6 rounded-2xl bg-gradient-to-br ${color} border ${border} hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden`}
               >
                 <div className="absolute -top-12 -right-12 w-32 h-32 rounded-full bg-white/[0.02] group-hover:scale-150 transition-transform duration-500" />
@@ -354,7 +365,7 @@ const Home = () => {
                     </span>
                   ))}
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
