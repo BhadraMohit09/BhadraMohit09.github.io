@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import { motion } from 'framer-motion';
 import SEOHead from '../components/SEOHead';
 
 const skills = [
@@ -24,8 +26,6 @@ const categoryColors = {
   Cloud: 'bg-cyan-500/10 text-cyan-300 border-cyan-500/20',
 };
 
-import { useState } from 'react';
-
 const Skills = () => {
   const [activeCategory, setActiveCategory] = useState('All');
 
@@ -44,12 +44,18 @@ const Skills = () => {
 
       <section className="py-20 bg-slate-900 min-h-[calc(100vh-4rem)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
+          <motion.div
+            initial={{ opacity: 0, y: -40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="text-center mb-12"
+          >
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Skills & Expertise</h1>
             <p className="text-lg text-gray-400 max-w-3xl mx-auto">
               A comprehensive toolkit built through hands-on experience and continuous learning.
             </p>
-          </div>
+          </motion.div>
 
           {/* Category filter */}
           <div className="flex flex-wrap justify-center gap-2 mb-12">
@@ -69,9 +75,13 @@ const Skills = () => {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filtered.map((skill) => (
-              <div
+            {filtered.map((skill, idx) => (
+              <motion.div
                 key={skill.name}
+                initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.5, delay: idx * 0.08, ease: "easeOut" }}
                 className="bg-slate-800 p-6 rounded-2xl hover:shadow-lg hover:shadow-purple-500/20 transition-all duration-300 transform hover:-translate-y-1 border border-slate-700 hover:border-purple-500/30 group"
               >
                 <div className="flex items-center justify-between mb-4">
@@ -84,20 +94,29 @@ const Skills = () => {
                   </span>
                 </div>
                 <div className="w-full bg-slate-700 rounded-full h-2 mb-4 overflow-hidden">
-                  <div
-                    className="bg-gradient-to-r from-purple-500 to-blue-500 h-2 rounded-full transition-all duration-700"
-                    style={{ width: `${skill.level}%` }}
+                  <motion.div
+                    initial={{ width: 0 }}
+                    whileInView={{ width: `${skill.level}%` }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1, delay: 0.3 + idx * 0.05, ease: "easeOut" }}
+                    className="bg-gradient-to-r from-purple-500 to-blue-500 h-2 rounded-full"
                   />
                 </div>
                 <span className={`text-xs px-3 py-1 rounded-full font-medium border ${categoryColors[skill.category] || 'bg-slate-700 text-gray-400 border-slate-600'}`}>
                   {skill.category}
                 </span>
-              </div>
+              </motion.div>
             ))}
           </div>
 
           {/* Tools & other tech */}
-          <div className="mt-16 bg-slate-800/50 rounded-2xl p-8 border border-slate-700">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+            className="mt-16 bg-slate-800/50 rounded-2xl p-8 border border-slate-700"
+          >
             <h2 className="text-2xl font-bold text-white mb-6 text-center">Also familiar with</h2>
             <div className="flex flex-wrap justify-center gap-3">
               {[
@@ -113,7 +132,7 @@ const Skills = () => {
                 </span>
               ))}
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
     </>

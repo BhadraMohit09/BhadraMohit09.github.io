@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 import { ExternalLink, Github, Lock } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
 
@@ -144,12 +145,18 @@ const Projects = () => {
 
       <section className="py-20 bg-slate-900 min-h-[calc(100vh-4rem)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
+          <motion.div
+            initial={{ opacity: 0, y: -40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="text-center mb-12"
+          >
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Featured Projects</h1>
             <p className="text-lg text-gray-400 max-w-3xl mx-auto">
               A showcase of my recent work, demonstrating technical expertise and creative problem-solving.
             </p>
-          </div>
+          </motion.div>
 
           {/* Filter tabs */}
           <div className="flex flex-wrap justify-center gap-2 mb-12">
@@ -169,9 +176,13 @@ const Projects = () => {
           </div>
 
           <div className="grid lg:grid-cols-2 gap-8">
-            {filtered.map((project) => (
-              <div
+            {filtered.map((project, idx) => (
+              <motion.div
                 key={project.title}
+                initial={{ opacity: 0, x: idx % 2 === 0 ? -60 : 60, y: 20 }}
+                whileInView={{ opacity: 1, x: 0, y: 0 }}
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{ duration: 0.6, delay: (idx % 2) * 0.15, ease: "easeOut" }}
                 className="group bg-slate-800 rounded-3xl shadow-lg hover:shadow-2xl hover:shadow-purple-500/20 transition-all duration-300 overflow-hidden border border-slate-700 hover:border-purple-500/30 flex flex-col"
               >
                 {/* Image */}
@@ -219,7 +230,7 @@ const Projects = () => {
                     <GitHubButton githubUrl={project.githubUrl} />
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>

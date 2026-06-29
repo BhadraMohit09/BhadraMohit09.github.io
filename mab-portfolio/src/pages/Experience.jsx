@@ -1,4 +1,5 @@
 import { Zap, GraduationCap, Code, Github } from 'lucide-react';
+import { motion } from 'framer-motion';
 import SEOHead from '../components/SEOHead';
 
 const experiences = [
@@ -56,12 +57,18 @@ const Experience = () => {
 
       <section className="py-20 bg-slate-900 min-h-[calc(100vh-4rem)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
+          <motion.div
+            initial={{ opacity: 0, y: -40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="text-center mb-16"
+          >
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Professional Experience</h1>
             <p className="text-lg text-gray-400 max-w-3xl mx-auto">
               My professional journey, key contributions, and the impact I've made in various roles.
             </p>
-          </div>
+          </motion.div>
 
           {/* Timeline */}
           <div className="relative">
@@ -70,8 +77,12 @@ const Experience = () => {
 
             <div className="space-y-8">
               {experiences.map((exp, index) => (
-                <div
+                <motion.div
                   key={exp.title}
+                  initial={{ opacity: 0, x: 60, y: 20 }}
+                  whileInView={{ opacity: 1, x: 0, y: 0 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 0.6, delay: index * 0.15, ease: "easeOut" }}
                   className={`relative rounded-2xl p-8 transition-all duration-300 border group ${
                     exp.isNew
                       ? 'bg-purple-600/5 border-purple-500/20 hover:shadow-lg hover:shadow-purple-500/10'
@@ -130,7 +141,7 @@ const Experience = () => {
                       </div>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
