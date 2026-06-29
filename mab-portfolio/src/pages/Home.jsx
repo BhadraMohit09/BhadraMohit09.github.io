@@ -4,17 +4,19 @@ import { Link } from 'react-router-dom';
 import {
   Github, Linkedin, Mail, Send, ExternalLink,
   ArrowRight, Sparkles, Code2, Layers, Zap,
-  Star, Coffee, Globe, ChevronRight, Rocket, GraduationCap, GitCommit, Terminal
+  Star, Coffee, Globe, ChevronRight, Rocket, GraduationCap, GitCommit, Terminal,
+  Server, FileCode2, Database, Bot, Container, Cloud, Check, Settings
 } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
 
 /* ─── Floating animated tech orb ─── */
-const TechOrb = ({ label, style, colorClass }) => (
+const TechOrb = ({ icon, label, style, colorClass }) => (
   <div
     className={`absolute hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border backdrop-blur-sm select-none pointer-events-none ${colorClass}`}
     style={style}
   >
-    {label}
+    {icon}
+    <span>{label}</span>
   </div>
 );
 
@@ -48,7 +50,7 @@ const useTypingEffect = (words, speed = 100, pause = 1800) => {
 };
 
 /* ─── Project preview card ─── */
-const ProjectPreview = ({ title, tag, color, url }) => (
+const ProjectPreview = ({ title, tag, tagIcon, color, url }) => (
   <a
     href={url}
     target="_blank"
@@ -60,7 +62,9 @@ const ProjectPreview = ({ title, tag, color, url }) => (
       <span className="text-sm font-medium text-gray-200">{title}</span>
     </div>
     <div className="flex items-center gap-2">
-      <span className="text-xs text-gray-500 bg-slate-700 px-2 py-0.5 rounded-full">{tag}</span>
+      <span className="flex items-center gap-1 text-xs text-gray-400 bg-slate-700 px-2 py-0.5 rounded-full font-medium">
+        {tag} {tagIcon}
+      </span>
       <ChevronRight className="w-3.5 h-3.5 text-gray-500 group-hover:text-purple-400 group-hover:translate-x-0.5 transition-all duration-200" />
     </div>
   </a>
@@ -69,7 +73,7 @@ const ProjectPreview = ({ title, tag, color, url }) => (
 /* ─── Skill chip ─── */
 const SkillChip = ({ icon, label }) => (
   <div className="flex items-center gap-2 px-3 py-2 bg-slate-800/80 border border-slate-700/60 rounded-lg text-sm text-gray-300 hover:border-purple-500/40 hover:text-white transition-all duration-200">
-    <span className="text-base">{icon}</span>
+    <span className="flex items-center">{icon}</span>
     <span className="font-medium">{label}</span>
   </div>
 );
@@ -89,12 +93,12 @@ const Home = () => {
   }, []);
 
   const floatingTechs = [
-    { label: '⚛️ React', style: { top: '18%', left: '6%' }, colorClass: 'bg-blue-500/10 border-blue-500/20 text-blue-300' },
-    { label: '🟢 Node.js', style: { top: '30%', right: '5%' }, colorClass: 'bg-green-500/10 border-green-500/20 text-green-300' },
-    { label: '🔵 .NET', style: { top: '55%', left: '4%' }, colorClass: 'bg-indigo-500/10 border-indigo-500/20 text-indigo-300' },
-    { label: '🐍 Python', style: { top: '65%', right: '6%' }, colorClass: 'bg-yellow-500/10 border-yellow-500/20 text-yellow-300' },
-    { label: '🍃 MongoDB', style: { top: '78%', left: '8%' }, colorClass: 'bg-emerald-500/10 border-emerald-500/20 text-emerald-300' },
-    { label: '🔷 TypeScript', style: { top: '80%', right: '7%' }, colorClass: 'bg-blue-500/10 border-blue-500/20 text-blue-300' },
+    { label: 'React', icon: <Code2 className="w-3.5 h-3.5 text-cyan-400" />, style: { top: '18%', left: '6%' }, colorClass: 'bg-blue-500/10 border-blue-500/20 text-blue-300' },
+    { label: 'Node.js', icon: <Server className="w-3.5 h-3.5 text-green-400" />, style: { top: '30%', right: '5%' }, colorClass: 'bg-green-500/10 border-green-500/20 text-green-300' },
+    { label: '.NET', icon: <Layers className="w-3.5 h-3.5 text-purple-400" />, style: { top: '55%', left: '4%' }, colorClass: 'bg-indigo-500/10 border-indigo-500/20 text-indigo-300' },
+    { label: 'Python', icon: <Terminal className="w-3.5 h-3.5 text-yellow-400" />, style: { top: '65%', right: '6%' }, colorClass: 'bg-yellow-500/10 border-yellow-500/20 text-yellow-300' },
+    { label: 'MongoDB', icon: <Database className="w-3.5 h-3.5 text-emerald-400" />, style: { top: '78%', left: '8%' }, colorClass: 'bg-emerald-500/10 border-emerald-500/20 text-emerald-300' },
+    { label: 'TypeScript', icon: <FileCode2 className="w-3.5 h-3.5 text-blue-400" />, style: { top: '80%', right: '7%' }, colorClass: 'bg-blue-500/10 border-blue-500/20 text-blue-300' },
   ];
 
   return (
@@ -394,15 +398,15 @@ const Home = () => {
 
             <div className="lg:w-1/2 grid grid-cols-2 sm:grid-cols-3 gap-2.5">
               {[
-                { icon: '⚛️', label: 'React' },
-                { icon: '🟢', label: 'Node.js' },
-                { icon: '🔷', label: 'TypeScript' },
-                { icon: '🍃', label: 'MongoDB' },
-                { icon: '🔵', label: '.NET Core' },
-                { icon: '🐍', label: 'Python' },
-                { icon: '🤖', label: 'ML / AI' },
-                { icon: '🐳', label: 'Docker' },
-                { icon: '☁️', label: 'AWS' },
+                { icon: <Code2 className="w-4 h-4 text-cyan-400" />, label: 'React' },
+                { icon: <Server className="w-4 h-4 text-green-400" />, label: 'Node.js' },
+                { icon: <FileCode2 className="w-4 h-4 text-blue-400" />, label: 'TypeScript' },
+                { icon: <Database className="w-4 h-4 text-emerald-400" />, label: 'MongoDB' },
+                { icon: <Layers className="w-4 h-4 text-purple-400" />, label: '.NET Core' },
+                { icon: <Terminal className="w-4 h-4 text-yellow-400" />, label: 'Python' },
+                { icon: <Bot className="w-4 h-4 text-pink-400" />, label: 'ML / AI' },
+                { icon: <Container className="w-4 h-4 text-sky-400" />, label: 'Docker' },
+                { icon: <Cloud className="w-4 h-4 text-amber-400" />, label: 'AWS' },
               ].map((s) => (
                 <SkillChip key={s.label} {...s} />
               ))}
@@ -433,11 +437,11 @@ const Home = () => {
             </div>
 
             <div className="lg:w-1/2 space-y-2.5 w-full">
-              <ProjectPreview title="MAB Converter" tag="Live ✓" color="bg-green-400" url="https://mab-converter-beta.vercel.app/" />
-              <ProjectPreview title="GST Calculator" tag="Live ✓" color="bg-green-400" url="https://gst-calculator-76b.pages.dev/" />
-              <ProjectPreview title="Finance Calculator" tag="Live ✓" color="bg-green-400" url="https://fin-calc-delta.vercel.app/" />
-              <ProjectPreview title="MAB Translator" tag="Live ✓" color="bg-green-400" url="https://mab-translator-seven.vercel.app/" />
-              <ProjectPreview title="AssessEdge360" tag="In Dev ⚙" color="bg-yellow-400" url="https://github.com/BhadraMohit09/AssessEdge360" />
+              <ProjectPreview title="MAB Converter" tag="Live" tagIcon={<Check className="w-3 h-3 text-green-400" />} color="bg-green-400" url="https://mab-converter-beta.vercel.app/" />
+              <ProjectPreview title="GST Calculator" tag="Live" tagIcon={<Check className="w-3 h-3 text-green-400" />} color="bg-green-400" url="https://gst-calculator-76b.pages.dev/" />
+              <ProjectPreview title="Finance Calculator" tag="Live" tagIcon={<Check className="w-3 h-3 text-green-400" />} color="bg-green-400" url="https://fin-calc-delta.vercel.app/" />
+              <ProjectPreview title="MAB Translator" tag="Live" tagIcon={<Check className="w-3 h-3 text-green-400" />} color="bg-green-400" url="https://mab-translator-seven.vercel.app/" />
+              <ProjectPreview title="AssessEdge360" tag="In Dev" tagIcon={<Settings className="w-3 h-3 text-yellow-400 animate-spin" />} color="bg-yellow-400" url="https://github.com/BhadraMohit09/AssessEdge360" />
               <div className="flex items-center justify-end pt-1">
                 <Link to="/projects" className="text-xs text-gray-500 hover:text-purple-400 flex items-center gap-1 transition-colors duration-200">
                   +3 more projects <ChevronRight className="w-3 h-3" />

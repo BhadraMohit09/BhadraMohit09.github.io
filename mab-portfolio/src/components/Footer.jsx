@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Github, Linkedin, Mail } from 'lucide-react';
+import { Github, Linkedin, Mail, Sparkles } from 'lucide-react';
 
 const navigationItems = [
   { path: '/', label: 'Home' },
@@ -50,7 +50,7 @@ const Footer = () => {
                 <li key={path}>
                   <Link
                     to={path}
-                    className="text-gray-400 hover:text-white text-sm transition-colors duration-200"
+                    className="text-gray-400 hover:text-purple-400 transition-colors duration-200 text-sm"
                   >
                     {label}
                   </Link>
@@ -82,7 +82,7 @@ const Footer = () => {
           <p className="text-gray-500 text-sm">
             &copy; {new Date().getFullYear()} Bhadra Mohit. All rights reserved.
           </p>
-          <p className="text-gray-600 text-sm">Engineered with Precision under MBTech ✨</p>
+          <p className="text-gray-600 text-sm flex items-center gap-1">Engineered with Precision under MBTech <Sparkles className="w-3.5 h-3.5 text-purple-400 inline" /></p>
         </div>
       </div>
     </footer>
