@@ -1,0 +1,10 @@
+{
+  "buildCommand": "cd mab-portfolio && npm install && npm run build",
+  "outputDirectory": "mab-portfolio/dist",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}

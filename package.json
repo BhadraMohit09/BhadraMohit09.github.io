@@ -1,0 +1,11 @@
+{
+  "name": "bhadra-mohit-portfolio-root",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Root package for Vercel and automatic monorepo deployment",
+  "scripts": {
+    "build": "cd mab-portfolio && npm install && npm run build",
+    "dev": "cd mab-portfolio && npm run dev",
+    "preview": "cd mab-portfolio && npm run preview"
+  }
+}
