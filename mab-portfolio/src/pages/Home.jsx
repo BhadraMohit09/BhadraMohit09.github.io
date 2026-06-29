@@ -437,14 +437,15 @@ const Home = () => {
             </div>
 
             <div className="lg:w-1/2 space-y-2.5 w-full">
-              <ProjectPreview title="MAB Converter" tag="Live" tagIcon={<Check className="w-3 h-3 text-green-400" />} color="bg-green-400" url="https://mab-converter-beta.vercel.app/" />
-              <ProjectPreview title="GST Calculator" tag="Live" tagIcon={<Check className="w-3 h-3 text-green-400" />} color="bg-green-400" url="https://gst-calculator-76b.pages.dev/" />
+              <ProjectPreview title="BharatAtlas (IndiaHub)" tag="Live" tagIcon={<Check className="w-3 h-3 text-green-400" />} color="bg-green-400" url="https://onebharat.vercel.app" />
+              <ProjectPreview title="FileForge" tag="Live" tagIcon={<Check className="w-3 h-3 text-green-400" />} color="bg-green-400" url="https://file-forge-silk.vercel.app/" />
+              <ProjectPreview title="Bharat Grantha" tag="Live" tagIcon={<Check className="w-3 h-3 text-green-400" />} color="bg-green-400" url="https://granthika.vercel.app" />
+              <ProjectPreview title="Time Hub" tag="Live" tagIcon={<Check className="w-3 h-3 text-green-400" />} color="bg-green-400" url="https://timehubone.vercel.app" />
+              <ProjectPreview title="CryptoGuard Toolkit" tag="Live" tagIcon={<Check className="w-3 h-3 text-green-400" />} color="bg-green-400" url="https://cryptogaurdlab.vercel.app" />
               <ProjectPreview title="Finance Calculator" tag="Live" tagIcon={<Check className="w-3 h-3 text-green-400" />} color="bg-green-400" url="https://fin-calc-delta.vercel.app/" />
-              <ProjectPreview title="MAB Translator" tag="Live" tagIcon={<Check className="w-3 h-3 text-green-400" />} color="bg-green-400" url="https://mab-translator-seven.vercel.app/" />
-              <ProjectPreview title="AssessEdge360" tag="In Dev" tagIcon={<Settings className="w-3 h-3 text-yellow-400 animate-spin" />} color="bg-yellow-400" url="https://github.com/BhadraMohit09/AssessEdge360" />
               <div className="flex items-center justify-end pt-1">
                 <Link to="/projects" className="text-xs text-gray-500 hover:text-purple-400 flex items-center gap-1 transition-colors duration-200">
-                  +3 more projects <ChevronRight className="w-3 h-3" />
+                  +7 more projects <ChevronRight className="w-3 h-3" />
                 </Link>
               </div>
             </div>
