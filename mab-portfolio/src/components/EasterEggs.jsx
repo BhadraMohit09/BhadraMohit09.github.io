@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Terminal, Sparkles, X, Play, ShieldAlert, PartyPopper, CheckCircle, HelpCircle, Gamepad2, Quote, RefreshCw } from 'lucide-react';
+import { Terminal, Sparkles, X, ShieldAlert, PartyPopper, Gamepad2, Quote, RefreshCw, Code2, Cpu, CheckCircle } from 'lucide-react';
 
 /* ─── Matrix Rain Overlay Component ─── */
 const MatrixRain = ({ onClose }) => {
@@ -211,18 +211,23 @@ const EasterEggs = () => {
   const [partyMode, setPartyMode] = useState(false);
   const [isFlipped, setIsFlipped] = useState(false);
   const [toastMessage, setToastMessage] = useState(null);
+  const [toastIcon, setToastIcon] = useState(null);
   const [isTerminalOpen, setIsTerminalOpen] = useState(false);
   const [terminalInput, setTerminalInput] = useState('');
   const [terminalLogs, setTerminalLogs] = useState([
-    { type: 'sys', text: '⚡ Welcome to Mohit Developer Terminal [v3.2.0]' },
+    { type: 'sys', text: '[System] Welcome to Mohit Developer Terminal v3.2.0' },
     { type: 'sys', text: 'Type "help" or click quick action buttons below to explore hidden Easter Eggs!' },
   ]);
 
   const navigate = useNavigate();
 
-  const triggerToast = (msg) => {
+  const triggerToast = (msg, IconComponent = Sparkles) => {
     setToastMessage(msg);
-    setTimeout(() => setToastMessage(null), 4500);
+    setToastIcon(<IconComponent className="w-5 h-5 text-amber-300 animate-spin" />);
+    setTimeout(() => {
+      setToastMessage(null);
+      setToastIcon(null);
+    }, 4500);
   };
 
   /* Listen for keyboard cheat codes */
@@ -235,29 +240,29 @@ const EasterEggs = () => {
           
           if (next.endsWith('matrix')) {
             setShowMatrix(true);
-            triggerToast('🟩 Matrix Easter Egg Unlocked!');
+            triggerToast('Matrix Easter Egg Unlocked!', Code2);
             return '';
           }
           if (next.endsWith('snake')) {
             setShowSnake(true);
-            triggerToast('🕹️ Retro Snake Game Unlocked!');
+            triggerToast('Retro Snake Game Unlocked!', Gamepad2);
             return '';
           }
           if (next.endsWith('mohit') || next.endsWith('easter')) {
             setShowConfetti(true);
-            triggerToast('🎉 Secret Code Unlocked: Welcome to Mohit\'s Cyber Lab!');
+            triggerToast('Secret Code Unlocked: Welcome to Mohit\'s Cyber Lab!', PartyPopper);
             return '';
           }
           if (next.endsWith('party')) {
             setPartyMode(true);
             setShowConfetti(true);
-            triggerToast('🪩 Party Mode Activated!');
+            triggerToast('Party Mode Activated!', PartyPopper);
             setTimeout(() => setPartyMode(false), 5000);
             return '';
           }
           if (next.endsWith('flip')) {
             setIsFlipped(true);
-            triggerToast('🙃 Do a barrel roll!');
+            triggerToast('Do a barrel roll!', RefreshCw);
             setTimeout(() => setIsFlipped(false), 1500);
             return '';
           }
@@ -294,21 +299,21 @@ const EasterEggs = () => {
         setPartyMode(true);
         setShowConfetti(true);
         setTimeout(() => setPartyMode(false), 5000);
-        newLogs.push({ type: 'res', text: '🪩 Party disco mode initiated!' });
+        newLogs.push({ type: 'res', text: '[Party] Disco mode initiated!' });
         break;
       case 'confetti':
         setShowConfetti(true);
-        newLogs.push({ type: 'res', text: '🎉 Confetti fired!' });
+        newLogs.push({ type: 'res', text: '[Celebration] Confetti fired!' });
         break;
       case 'hack':
         newLogs.push({ type: 'sys', text: 'Bypassing firewalls... [██████████] 100%' });
-        newLogs.push({ type: 'res', text: '🔥 ACCESS GRANTED: Mohit Bhadra is the optimal hire for your engineering team!' });
+        newLogs.push({ type: 'res', text: '[ACCESS GRANTED] Mohit Bhadra is the optimal hire for your engineering team!' });
         break;
       case 'flip':
       case 'barrelroll':
         setIsFlipped(true);
         setTimeout(() => setIsFlipped(false), 1500);
-        newLogs.push({ type: 'res', text: '🙃 Barrel roll initiated!' });
+        newLogs.push({ type: 'res', text: '[Rotation] Barrel roll initiated!' });
         break;
       case 'quote':
         const quotes = [
@@ -316,7 +321,7 @@ const EasterEggs = () => {
           '"Code is like humor. When you have to explain it, it’s bad." – Cory House',
           '"Simplicity is the soul of efficiency." – Austin Freeman'
         ];
-        newLogs.push({ type: 'res', text: `💡 ${quotes[Math.floor(Math.random() * quotes.length)]}` });
+        newLogs.push({ type: 'res', text: `[Quote] ${quotes[Math.floor(Math.random() * quotes.length)]}` });
         break;
       case 'skills':
         newLogs.push({ type: 'res', text: 'Core Stack: ReactJS, Node.js, Express, .NET Core / C#, Python ML, MongoDB, Docker, AWS.' });
@@ -362,7 +367,7 @@ const EasterEggs = () => {
       {/* Toast Notification */}
       {toastMessage && (
         <div className="fixed top-24 right-6 z-50 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-bold px-6 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 animate-bounce border border-white/20">
-          <PartyPopper className="w-5 h-5 text-amber-300" />
+          {toastIcon || <Sparkles className="w-5 h-5 text-amber-300" />}
           <span>{toastMessage}</span>
         </div>
       )}
@@ -372,10 +377,10 @@ const EasterEggs = () => {
         <button
           onClick={() => setIsTerminalOpen(true)}
           className="group relative flex items-center gap-2 bg-slate-900/90 hover:bg-purple-600 text-purple-400 hover:text-white border border-purple-500/30 px-4 py-2.5 rounded-full shadow-lg shadow-purple-500/20 backdrop-blur-md transition-all duration-300 hover:scale-105"
-          title="Type 'matrix', 'snake', 'flip', or click for Secret Terminal"
+          title="Secret Terminal Console"
         >
           <Terminal className="w-4 h-4 animate-pulse text-green-400 group-hover:text-white" />
-          <span className="text-xs font-bold tracking-wider uppercase">🕹️ Secret Easter Eggs</span>
+          <span className="text-xs font-bold tracking-wider uppercase">Secret Easter Eggs</span>
         </button>
       </div>
 
@@ -402,20 +407,23 @@ const EasterEggs = () => {
 
             {/* Quick Actions Bar */}
             <div className="bg-slate-900/60 px-4 py-2 border-b border-white/5 flex flex-wrap gap-2 items-center">
-              <span className="text-[10px] font-bold uppercase text-gray-400">Quick Hacks:</span>
+              <span className="text-[10px] font-bold uppercase text-gray-400 flex items-center gap-1">
+                <Cpu className="w-3 h-3 text-purple-400" /> Quick Hacks:
+              </span>
               {[
-                { label: '🟩 Matrix', cmd: 'matrix' },
-                { label: '🕹️ Snake', cmd: 'snake' },
-                { label: '🔥 Hack', cmd: 'hack' },
-                { label: '🙃 Flip', cmd: 'flip' },
-                { label: '🪩 Party', cmd: 'party' },
-                { label: '💡 Quote', cmd: 'quote' },
+                { label: 'Matrix', cmd: 'matrix', icon: <Code2 className="w-3 h-3" /> },
+                { label: 'Snake', cmd: 'snake', icon: <Gamepad2 className="w-3 h-3" /> },
+                { label: 'Hack', cmd: 'hack', icon: <ShieldAlert className="w-3 h-3" /> },
+                { label: 'Flip', cmd: 'flip', icon: <RefreshCw className="w-3 h-3" /> },
+                { label: 'Party', cmd: 'party', icon: <PartyPopper className="w-3 h-3" /> },
+                { label: 'Quote', cmd: 'quote', icon: <Quote className="w-3 h-3" /> },
               ].map(btn => (
                 <button
                   key={btn.cmd}
                   onClick={() => runCommand(btn.cmd)}
-                  className="bg-purple-950/60 hover:bg-purple-600 text-purple-300 hover:text-white border border-purple-500/30 px-2.5 py-1 rounded-lg text-xs font-bold transition-all"
+                  className="flex items-center gap-1.5 bg-purple-950/60 hover:bg-purple-600 text-purple-300 hover:text-white border border-purple-500/30 px-2.5 py-1 rounded-lg text-xs font-bold transition-all"
                 >
+                  {btn.icon}
                   {btn.label}
                 </button>
               ))}

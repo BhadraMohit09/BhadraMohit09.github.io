@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import {
   Github, Linkedin, Mail, Send, ExternalLink,
   ArrowRight, Sparkles, Code2, Layers, Zap,
-  Star, Coffee, Globe, ChevronRight
+  Star, Coffee, Globe, ChevronRight, Rocket, GraduationCap, GitCommit, Terminal
 } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
 
@@ -245,13 +245,13 @@ const Home = () => {
           {/* Stats row */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-2xl mx-auto mb-6">
             {[
-              { value: '15+', label: 'Projects', icon: '🚀' },
-              { value: '100+', label: 'Students Mentored', icon: '🎓' },
-              { value: '500+', label: 'Commits', icon: '💻' },
-              { value: '3+', label: 'Yrs Experience', icon: '⚡' },
+              { value: '15+', label: 'Projects', icon: <Rocket className="w-5 h-5 mx-auto text-purple-400 group-hover:scale-110 transition-transform" /> },
+              { value: '100+', label: 'Students Mentored', icon: <GraduationCap className="w-5 h-5 mx-auto text-blue-400 group-hover:scale-110 transition-transform" /> },
+              { value: '500+', label: 'Commits', icon: <GitCommit className="w-5 h-5 mx-auto text-green-400 group-hover:scale-110 transition-transform" /> },
+              { value: '3+', label: 'Yrs Experience', icon: <Zap className="w-5 h-5 mx-auto text-amber-400 group-hover:scale-110 transition-transform" /> },
             ].map(({ value, label, icon }) => (
               <div key={label} className="group text-center p-4 bg-slate-800/40 hover:bg-slate-800/70 rounded-2xl border border-slate-700/60 hover:border-purple-500/30 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-purple-500/10">
-                <div className="text-lg mb-1">{icon}</div>
+                <div className="mb-2 flex justify-center">{icon}</div>
                 <div className="text-xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">{value}</div>
                 <div className="text-gray-500 text-xs mt-0.5 font-medium">{label}</div>
               </div>

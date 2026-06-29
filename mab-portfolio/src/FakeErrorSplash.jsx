@@ -102,11 +102,7 @@ const FakeErrorSplash = ({
   return (
     <div className="relative">
       {/* Main content */}
-      <div
-        className={`transition-all duration-500 ${
-          show ? "opacity-0 scale-95 blur-sm pointer-events-none" : "opacity-100 scale-100 blur-0"
-        }`}
-      >
+      <div className={show ? "opacity-0 scale-95 blur-sm pointer-events-none h-screen overflow-hidden" : ""}>
         {children}
       </div>
 

@@ -96,7 +96,7 @@ const getStatusStyle = (status) => {
 };
 
 const handlePrivateRepo = () => {
-  alert('🔒 This repository is private and not publicly available.');
+  alert('This repository is private and not publicly available.');
 };
 
 const GitHubButton = ({ githubUrl }) => {

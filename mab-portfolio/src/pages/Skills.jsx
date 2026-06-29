@@ -1,17 +1,18 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { Code2, Server, FileCode2, Database, Layers, Terminal, Bot, Container, Cloud } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
 
 const skills = [
-  { name: 'React', level: 95, category: 'Frontend', icon: '⚛️' },
-  { name: 'Node.js', level: 90, category: 'Backend', icon: '🟢' },
-  { name: 'TypeScript', level: 88, category: 'Language', icon: '🔷' },
-  { name: 'MongoDB', level: 85, category: 'Database', icon: '🍃' },
-  { name: '.NET Core', level: 82, category: 'Backend', icon: '🔵' },
-  { name: 'Python', level: 85, category: 'Language', icon: '🐍' },
-  { name: 'Machine Learning', level: 78, category: 'AI/ML', icon: '🤖' },
-  { name: 'Docker', level: 75, category: 'DevOps', icon: '🐳' },
-  { name: 'AWS', level: 70, category: 'Cloud', icon: '☁️' },
+  { name: 'React', level: 95, category: 'Frontend', icon: <Code2 className="w-6 h-6 text-cyan-400" /> },
+  { name: 'Node.js', level: 90, category: 'Backend', icon: <Server className="w-6 h-6 text-green-400" /> },
+  { name: 'TypeScript', level: 88, category: 'Language', icon: <FileCode2 className="w-6 h-6 text-blue-400" /> },
+  { name: 'MongoDB', level: 85, category: 'Database', icon: <Database className="w-6 h-6 text-emerald-400" /> },
+  { name: '.NET Core', level: 82, category: 'Backend', icon: <Layers className="w-6 h-6 text-purple-400" /> },
+  { name: 'Python', level: 85, category: 'Language', icon: <Terminal className="w-6 h-6 text-yellow-400" /> },
+  { name: 'Machine Learning', level: 78, category: 'AI/ML', icon: <Bot className="w-6 h-6 text-pink-400" /> },
+  { name: 'Docker', level: 75, category: 'DevOps', icon: <Container className="w-6 h-6 text-sky-400" /> },
+  { name: 'AWS', level: 70, category: 'Cloud', icon: <Cloud className="w-6 h-6 text-amber-400" /> },
 ];
 
 const categories = ['All', 'Frontend', 'Backend', 'Language', 'Database', 'AI/ML', 'DevOps', 'Cloud'];
