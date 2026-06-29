@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 import { ArrowUp } from 'lucide-react';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import EasterEggs from './EasterEggs';
 
 const Layout = () => {
   const [showScrollTop, setShowScrollTop] = useState(false);
@@ -17,6 +18,7 @@ const Layout = () => {
 
   return (
     <div className="bg-slate-900 text-gray-300 min-h-screen relative">
+      <EasterEggs />
       <Navbar />
       <main className="pt-24 md:pt-28 pb-20">
         <Outlet />

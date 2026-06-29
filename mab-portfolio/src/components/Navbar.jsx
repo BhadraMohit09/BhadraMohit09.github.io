@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Send, ChevronDown, Sparkles, Code2, Layers, User, Briefcase, Mail, Home } from 'lucide-react';
+import { Menu, X, Send, ChevronDown, Sparkles, Code2, Layers, User, Briefcase, Mail, Home, FileText } from 'lucide-react';
 
 const navSections = [
   {
@@ -32,6 +32,12 @@ const navSections = [
     label: 'Experience',
     icon: <Briefcase className="w-4 h-4" />,
     description: 'My professional journey',
+  },
+  {
+    path: '/resume',
+    label: 'Resume',
+    icon: <FileText className="w-4 h-4" />,
+    description: 'Career & education timeline',
   },
   {
     path: '/contact',
