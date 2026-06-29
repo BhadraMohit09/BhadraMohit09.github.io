@@ -107,7 +107,7 @@ const Home = () => {
       {/* ══════════════════════════════════════════
           HERO SECTION
       ══════════════════════════════════════════ */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-[calc(100vh-6rem)] md:min-h-[calc(100vh-7rem)] flex items-center justify-center overflow-hidden">
 
         {/* Layered background */}
         <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-indigo-950/40 to-slate-900" />

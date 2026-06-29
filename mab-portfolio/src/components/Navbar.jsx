@@ -78,10 +78,10 @@ const Navbar = () => {
     <>
       <nav
         ref={menuRef}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 backdrop-blur-xl border-b ${
           isScrolled
-            ? 'bg-slate-950/75 backdrop-blur-2xl border-b border-white/[0.06] shadow-2xl shadow-black/30'
-            : 'bg-transparent'
+            ? 'bg-slate-950/85 border-white/[0.12] shadow-2xl shadow-purple-950/30 py-0'
+            : 'bg-slate-950/45 border-white/[0.08] shadow-lg shadow-black/20 py-1.5'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -90,10 +90,12 @@ const Navbar = () => {
             {/* ── Logo ── */}
             <Link to="/" className="flex items-center gap-2.5 group flex-shrink-0">
               <div className="relative">
-                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-blue-600 flex items-center justify-center shadow-lg shadow-purple-500/30 group-hover:shadow-purple-500/50 transition-shadow duration-300">
-                  <Sparkles className="w-4 h-4 text-white" />
-                </div>
-                <div className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-green-400 border-2 border-slate-900 animate-pulse" />
+                <img
+                  src="/icon-192.png"
+                  alt="MBTech Logo"
+                  className="w-9 h-9 rounded-xl object-cover shadow-lg shadow-purple-500/30 group-hover:shadow-purple-500/50 group-hover:scale-105 transition-all duration-300 border border-white/20"
+                />
+                <div className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-green-400 border-2 border-slate-900 animate-pulse z-10" />
               </div>
               <span className="font-bold text-lg text-white tracking-tight">
                 MB<span className="text-purple-400">Tech</span>

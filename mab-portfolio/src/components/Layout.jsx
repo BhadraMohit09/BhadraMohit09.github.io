@@ -18,7 +18,7 @@ const Layout = () => {
   return (
     <div className="bg-slate-900 text-gray-300 min-h-screen relative">
       <Navbar />
-      <main className="pt-16 pb-20">
+      <main className="pt-24 md:pt-28 pb-20">
         <Outlet />
       </main>
       <Footer />
