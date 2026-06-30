@@ -144,7 +144,12 @@ const Home = () => {
           <TechOrb key={t.label} {...t} />
         ))}
 
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center py-20">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center py-20"
+        >
 
           {/* Top badge */}
           <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-purple-500/10 border border-purple-500/20 rounded-full text-purple-300 text-sm font-medium mb-8 hover:bg-purple-500/15 transition-colors duration-200">
@@ -261,7 +266,7 @@ const Home = () => {
               </div>
             ))}
           </div>
-        </div>
+        </motion.div>
 
         {/* Scroll indicator */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 animate-bounce">
@@ -378,10 +383,16 @@ const Home = () => {
       {/* ══════════════════════════════════════════
           SKILLS SNAPSHOT
       ══════════════════════════════════════════ */}
-      <section className="py-20 bg-slate-900">
+      <section className="py-20 bg-slate-900 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row gap-12 items-start">
-            <div className="lg:w-1/2">
+            <motion.div 
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.6 }}
+              className="lg:w-1/2"
+            >
               <span className="text-xs font-bold uppercase tracking-widest text-purple-400 mb-2 block">Tech Stack</span>
               <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">My Core Toolkit</h2>
               <p className="text-gray-400 leading-relaxed mb-8">
@@ -394,9 +405,15 @@ const Home = () => {
                 See full skills breakdown
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
               </Link>
-            </div>
+            </motion.div>
 
-            <div className="lg:w-1/2 grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+            <motion.div 
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="lg:w-1/2 grid grid-cols-2 sm:grid-cols-3 gap-2.5"
+            >
               {[
                 { icon: <Code2 className="w-4 h-4 text-cyan-400" />, label: 'React' },
                 { icon: <Server className="w-4 h-4 text-green-400" />, label: 'Node.js' },
@@ -410,7 +427,7 @@ const Home = () => {
               ].map((s) => (
                 <SkillChip key={s.label} {...s} />
               ))}
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -418,10 +435,16 @@ const Home = () => {
       {/* ══════════════════════════════════════════
           LIVE PROJECTS PREVIEW
       ══════════════════════════════════════════ */}
-      <section className="py-20 bg-slate-900/80 border-t border-slate-800/80">
+      <section className="py-20 bg-slate-900/80 border-t border-slate-800/80 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row gap-12 items-start">
-            <div className="lg:w-1/2">
+            <motion.div 
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.6 }}
+              className="lg:w-1/2"
+            >
               <span className="text-xs font-bold uppercase tracking-widest text-blue-400 mb-2 block">Live Projects</span>
               <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Things I've Shipped</h2>
               <p className="text-gray-400 leading-relaxed mb-6">
@@ -434,9 +457,15 @@ const Home = () => {
                 Browse all projects
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
               </Link>
-            </div>
+            </motion.div>
 
-            <div className="lg:w-1/2 space-y-2.5 w-full">
+            <motion.div 
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="lg:w-1/2 space-y-2.5 w-full"
+            >
               <ProjectPreview title="BharatAtlas (IndiaHub)" tag="Live" tagIcon={<Check className="w-3 h-3 text-green-400" />} color="bg-green-400" url="https://onebharat.vercel.app" />
               <ProjectPreview title="FileForge" tag="Live" tagIcon={<Check className="w-3 h-3 text-green-400" />} color="bg-green-400" url="https://file-forge-silk.vercel.app/" />
               <ProjectPreview title="Bharat Grantha" tag="Live" tagIcon={<Check className="w-3 h-3 text-green-400" />} color="bg-green-400" url="https://granthika.vercel.app" />
@@ -448,7 +477,7 @@ const Home = () => {
                   +7 more projects <ChevronRight className="w-3 h-3" />
                 </Link>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -464,7 +493,13 @@ const Home = () => {
         <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-64 h-64 bg-purple-600/15 rounded-full blur-3xl" />
         <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-64 h-64 bg-blue-600/15 rounded-full blur-3xl" />
 
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6 }}
+          className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center"
+        >
           <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-purple-500/10 border border-purple-500/20 rounded-full text-purple-300 text-xs font-semibold mb-6 uppercase tracking-wider">
             <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
             Open to opportunities
@@ -497,7 +532,7 @@ const Home = () => {
               View GitHub
             </a>
           </div>
-        </div>
+        </motion.div>
       </section>
     </>
   );

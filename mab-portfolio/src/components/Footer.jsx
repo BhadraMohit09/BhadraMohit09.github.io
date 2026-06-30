@@ -1,57 +1,85 @@
 import { Link } from 'react-router-dom';
-import { Github, Linkedin, Mail, Sparkles } from 'lucide-react';
+import { Github, Linkedin, Mail, Sparkles, ArrowUpRight } from 'lucide-react';
 
 const navigationItems = [
   { path: '/', label: 'Home' },
   { path: '/about', label: 'About' },
-  { path: '/skills', label: 'Skills' },
   { path: '/projects', label: 'Projects' },
   { path: '/experience', label: 'Experience' },
+  { path: '/skills', label: 'Skills' },
   { path: '/contact', label: 'Contact' },
 ];
 
 const Footer = () => {
   return (
-    <footer className="bg-slate-950 border-t border-slate-800 text-white py-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid md:grid-cols-4 gap-10 mb-12">
-          <div className="md:col-span-2">
-            <div className="flex items-center gap-2 mb-4">
-              <span className="w-2 h-2 rounded-full bg-purple-400" />
-              <h3 className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+    <footer className="relative bg-slate-950 text-white overflow-hidden border-t border-white/10">
+      {/* Subtle Background Glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-purple-500/10 blur-[120px] rounded-full pointer-events-none" />
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
+        {/* Top CTA Section */}
+        <div className="flex flex-col md:flex-row items-start md:items-end justify-between border-b border-white/10 pb-16 mb-16 gap-8">
+          <div className="max-w-2xl">
+            <h2 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight">
+              Have an idea? <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">Let's bring it to life.</span>
+            </h2>
+            <p className="text-gray-400 text-lg md:text-xl">
+              I'm always open to discussing new projects, creative ideas, or opportunities to be part of your visions.
+            </p>
+          </div>
+          <Link
+            to="/contact"
+            className="group relative inline-flex items-center justify-center px-8 py-4 font-medium text-white transition-all duration-300 bg-white/5 border border-white/10 rounded-full hover:bg-white/10 hover:scale-105 hover:shadow-[0_0_20px_rgba(168,85,247,0.3)]"
+          >
+            <span className="mr-2">Get in Touch</span>
+            <ArrowUpRight className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+          </Link>
+        </div>
+
+        {/* Main Footer Content */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-16">
+          <div className="md:col-span-5">
+            <div className="flex items-center gap-2 mb-6">
+              <span className="w-2.5 h-2.5 rounded-full bg-purple-500 animate-pulse" />
+              <h3 className="text-2xl font-bold tracking-wide">
                 Bhadra Mohit
               </h3>
             </div>
-            <p className="text-gray-400 mb-6 leading-relaxed">
-              Full Stack Developer passionate about creating exceptional digital experiences and solving complex problems through innovative technology solutions.
+            <p className="text-gray-400 leading-relaxed mb-8 max-w-sm">
+              Crafting exceptional digital experiences through clean code and elegant design. Based in the digital realm.
             </p>
-            <div className="flex space-x-3">
+            <div className="flex space-x-4">
               {[
-                { icon: <Github className="w-4 h-4" />, href: 'https://github.com/BhadraMohit09', label: 'GitHub' },
-                { icon: <Linkedin className="w-4 h-4" />, href: 'https://linkedin.com/in/bhadramohit27', label: 'LinkedIn' },
-                { icon: <Mail className="w-4 h-4" />, href: 'mailto:bhadramohit.cloud@gmail.com', label: 'Email' },
+                { icon: <Github className="w-5 h-5" />, href: 'https://github.com/BhadraMohit09', label: 'GitHub' },
+                { icon: <Linkedin className="w-5 h-5" />, href: 'https://linkedin.com/in/bhadramohit27', label: 'LinkedIn' },
+                { icon: <Mail className="w-5 h-5" />, href: 'mailto:bhadramohit.cloud@gmail.com', label: 'Email' },
               ].map(({ icon, href, label }) => (
                 <a
                   key={label}
                   href={href}
-                  className="p-2.5 rounded-lg bg-slate-800 border border-slate-700 text-gray-400 hover:text-white hover:border-slate-500 transition-all duration-200"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative p-3 rounded-full bg-white/5 border border-white/10 text-gray-400 hover:text-white transition-all duration-300 hover:bg-purple-500/20 hover:border-purple-500/50"
                   aria-label={label}
                 >
                   {icon}
+                  <div className="absolute inset-0 rounded-full bg-purple-400/20 blur-md opacity-0 group-hover:opacity-100 transition-opacity" />
                 </a>
               ))}
             </div>
           </div>
 
-          <div>
-            <h4 className="text-sm font-semibold text-gray-300 uppercase tracking-wider mb-4">Quick Links</h4>
-            <ul className="space-y-3">
+          <div className="md:col-span-3 md:col-start-7">
+            <h4 className="text-sm font-semibold text-white uppercase tracking-wider mb-6">Navigation</h4>
+            <ul className="space-y-4">
               {navigationItems.map(({ path, label }) => (
                 <li key={path}>
                   <Link
                     to={path}
-                    className="text-gray-400 hover:text-purple-400 transition-colors duration-200 text-sm"
+                    className="text-gray-400 hover:text-purple-400 transition-colors duration-200 text-sm group flex items-center gap-2"
                   >
+                    <span className="w-0 h-px bg-purple-400 group-hover:w-4 transition-all duration-300" />
                     {label}
                   </Link>
                 </li>
@@ -59,30 +87,33 @@ const Footer = () => {
             </ul>
           </div>
 
-          <div>
-            <h4 className="text-sm font-semibold text-gray-300 uppercase tracking-wider mb-4">Services</h4>
-            <ul className="space-y-3">
+          <div className="md:col-span-3">
+            <h4 className="text-sm font-semibold text-white uppercase tracking-wider mb-6">Capabilities</h4>
+            <ul className="space-y-4">
               {[
                 'Full Stack Development',
-                'API Design & Integration',
-                'UI/UX Implementation',
-                'ML Pipeline Development',
-                'Technical Consulting',
-                'Code Review',
+                'API Architecture',
+                'Creative UI/UX',
+                'ML Pipelines',
               ].map((service) => (
-                <li key={service}>
-                  <span className="text-gray-400 text-sm">{service}</span>
+                <li key={service} className="text-gray-400 text-sm flex items-center gap-2">
+                  <Sparkles className="w-3.5 h-3.5 text-purple-500/70" />
+                  {service}
                 </li>
               ))}
             </ul>
           </div>
         </div>
 
-        <div className="border-t border-slate-800 pt-8 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-gray-500 text-sm">
+        {/* Bottom Bar */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 border-t border-white/10 text-sm text-gray-500">
+          <p>
             &copy; {new Date().getFullYear()} Bhadra Mohit. All rights reserved.
           </p>
-          <p className="text-gray-600 text-sm flex items-center gap-1">Engineered with Precision under MBTech <Sparkles className="w-3.5 h-3.5 text-purple-400 inline" /></p>
+          <p className="flex items-center gap-1.5 hover:text-gray-300 transition-colors cursor-default">
+            Engineered with Precision under MBTech
+            <Sparkles className="w-4 h-4 text-purple-400" />
+          </p>
         </div>
       </div>
     </footer>
