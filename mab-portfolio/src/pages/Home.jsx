@@ -153,7 +153,6 @@ const Home = () => {
 
           {/* Top badge */}
           <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-purple-500/10 border border-purple-500/20 rounded-full text-purple-300 text-sm font-medium mb-8 hover:bg-purple-500/15 transition-colors duration-200">
-            <Sparkles className="w-3.5 h-3.5" />
             Associate Software Engineer @ ZennovaTech
             <span className="flex h-2 w-2 relative">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />

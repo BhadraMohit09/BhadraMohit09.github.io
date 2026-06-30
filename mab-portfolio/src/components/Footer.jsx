@@ -118,7 +118,7 @@ const Footer = () => {
                 'ML Pipelines',
               ].map((service) => (
                 <li key={service} className="text-gray-400 text-sm flex items-center gap-2">
-                  <Sparkles className="w-3.5 h-3.5 text-purple-500/70" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-purple-500/70" />
                   {service}
                 </li>
               ))}
@@ -139,7 +139,6 @@ const Footer = () => {
             </div>
             <p className="flex items-center gap-1.5 hover:text-gray-300 transition-colors cursor-default">
               Engineered with Precision under MBTech
-              <Sparkles className="w-4 h-4 text-purple-400" />
             </p>
           </div>
         </div>

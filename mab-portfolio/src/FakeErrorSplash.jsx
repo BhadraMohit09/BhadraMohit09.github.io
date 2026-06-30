@@ -1,52 +1,9 @@
-import React, { useEffect, useState, memo } from "react";
-
-// Memoized SadFileIcon
-const SadFileIcon = memo(() => (
-  <svg
-    width="48"
-    height="48"
-    viewBox="0 0 48 48"
-    aria-hidden="true"
-    className="shrink-0"
-  >
-    <g fill="none" stroke="#6b7280" strokeWidth="2">
-      <path d="M30 2H14a4 4 0 0 0-4 4v36a4 4 0 0 0 4 4h20a4 4 0 0 0 4-4V10z" />
-      <path d="M30 2v10h10" />
-      <circle cx="19" cy="22" r="1.5" fill="#6b7280" stroke="none" />
-      <circle cx="29" cy="22" r="1.5" fill="#6b7280" stroke="none" />
-      <path d="M18 31c2.2-2 9.8-2 12 0" strokeLinecap="round" />
-    </g>
-  </svg>
-));
-
-// TopBar
-const TopBar = ({ host }) => (
-  <div className="h-10 border-b border-gray-200 flex items-center px-3 gap-2 bg-gray-50">
-    <div className="flex gap-2">
-      <span className="h-3 w-3 rounded-full bg-red-500" />
-      <span className="h-3 w-3 rounded-full bg-yellow-500" />
-      <span className="h-3 w-3 rounded-full bg-green-500" />
-    </div>
-    <div className="flex-1 flex justify-center">
-      <div className="w-full max-w-md border border-gray-300 rounded-md px-2 py-0.5 text-xs text-gray-500 truncate">
-        https://{host}/
-      </div>
-    </div>
-  </div>
-);
-
-// Footer
-const Footer = ({ host }) => (
-  <div className="border-t border-gray-200 p-2 text-xs text-gray-500 text-center">
-    © 2025 MBTech
-  </div>
-);
+import React, { useEffect, useState } from "react";
 
 const FakeErrorSplash = ({
   children,
   delay = 0,
   domain,
-  showTopBar = true,
   errorCode = "SUCC_CONNECTION_OPENED",
 }) => {
   const [show, setShow] = useState(true);
@@ -69,7 +26,7 @@ const FakeErrorSplash = ({
       document.body.style.top = "";
       document.body.style.width = "";
       document.body.style.overflow = "";
-      window.scrollTo(0, scrollY); // restore scroll
+      window.scrollTo(0, scrollY);
     }
     return () => {
       document.body.style.position = "";
@@ -92,10 +49,10 @@ const FakeErrorSplash = ({
     if (!show) return;
     let val = 0;
     const id = setInterval(() => {
-      val = Math.min(val + Math.random() * 10 + 5, 100);
+      val = Math.min(val + Math.random() * 15 + 5, 100);
       setProgress(val);
       if (val >= 100) clearInterval(id);
-    }, 200);
+    }, 150);
     return () => clearInterval(id);
   }, [show]);
 
@@ -111,59 +68,61 @@ const FakeErrorSplash = ({
         <div
           role="alert"
           aria-live="assertive"
-          className="fixed inset-0 z-[9999] bg-white text-gray-800 flex flex-col"
+          className="fixed inset-0 z-[9999] bg-[#0a0a0a] text-green-500 font-mono flex flex-col p-6 sm:p-12 overflow-hidden selection:bg-green-500/30"
         >
-          {showTopBar && <TopBar host={host} />}
+          {/* Terminal content */}
+          <div className="max-w-3xl mx-auto w-full flex flex-col justify-center h-full relative z-10">
+            <div className="mb-8">
+              <h1 className="text-2xl sm:text-4xl font-bold mb-2 tracking-tight flex items-center gap-3">
+                <span className="text-red-500">[FATAL_EXCEPTION]</span> System Boot
+              </h1>
+              <p className="text-green-400/80 text-sm sm:text-base">
+                kernel_panic: connection forcibly opened by host &lt;{host}&gt;
+              </p>
+            </div>
 
-          {/* Body */}
-          <div className="flex-1 flex items-center justify-center px-4">
-            <div className="max-w-2xl w-full flex flex-col md:flex-row items-start gap-4">
-              <SadFileIcon />
+            <div className="space-y-2 text-sm sm:text-base mb-8 opacity-80">
+              <p>{">"} INITIALIZING HANDSHAKE...</p>
+              <p>{">"} BYPASSING FIREWALL... <span className="text-blue-400">[OK]</span></p>
+              <p>{">"} RESOLVING DNS FOR {host}... <span className="text-blue-400">[OK]</span></p>
+              <p>{">"} INJECTING PORTFOLIO DATA... <span className="text-blue-400">[OK]</span></p>
+              <p className="text-yellow-500 animate-pulse">{">"} {errorCode}</p>
+            </div>
 
-              <div>
-                <h1 className="text-base font-medium leading-snug">
-                  This site <span className="font-semibold">actually can</span> be reached
-                </h1>
-
-                <p className="mt-1 text-gray-600 text-sm">
-                  <span className="font-mono">{host}</span> unexpectedly{" "}
-                  <span className="font-semibold">opened</span> the connection.
-                </p>
-
-                {/* Suggestions */}
-                <div className="mt-4">
-                  <p className="text-gray-500 text-sm">Try:</p>
-                  <ul className="mt-1 space-y-1 text-sm">
-                    <li className="text-gray-400">• Checking the connection</li>
-                    <li className="text-blue-600">• Checking the proxy and the firewall</li>
-                    <li className="text-blue-600">• Running Windows Network Diagnostics</li>
-                    <li className="text-gray-400">• Restarting your router</li>
-                  </ul>
-                </div>
-
-                {/* Error code */}
-                <p className="mt-4 text-gray-400 font-semibold text-xs tracking-wide">{errorCode}</p>
-
-                {/* Progress bar */}
-                <div className="mt-2 w-full h-2 bg-gray-200 rounded overflow-hidden">
-                  <div
-                    style={{ width: `${progress}%` }}
-                    className="h-full bg-blue-600 transition-all duration-300"
-                  />
-                </div>
-
-                {/* Start button */}
-                <button
-                  onClick={() => setShow(false)}
-                  className="mt-3 inline-flex items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-white text-sm font-medium shadow-sm transition hover:bg-blue-700"
-                >
-                  Start
-                </button>
+            {/* Glitched Progress bar */}
+            <div className="w-full max-w-md mb-8">
+              <div className="flex justify-between text-xs mb-2 opacity-60">
+                <span>MOUNTING FILESYSTEM</span>
+                <span>{Math.floor(progress)}%</span>
+              </div>
+              <div className="w-full h-1 bg-green-900/30 overflow-hidden">
+                <div
+                  style={{ width: `${progress}%` }}
+                  className="h-full bg-green-500 transition-all duration-150 ease-out shadow-[0_0_10px_rgba(34,197,94,0.5)]"
+                />
               </div>
             </div>
-          </div>
 
-          <Footer host={host} />
+            {/* Start button / override */}
+            <div>
+              <button
+                onClick={() => setShow(false)}
+                className="group relative inline-flex items-center justify-center border border-green-500/50 bg-green-500/10 hover:bg-green-500/20 px-6 py-2 text-green-400 text-sm uppercase tracking-widest transition-all duration-300"
+              >
+                <span className="animate-pulse mr-2 group-hover:hidden">_</span>
+                <span className="hidden group-hover:inline mr-2">{">"}</span>
+                Execute_Override
+              </button>
+            </div>
+          </div>
+          
+          {/* Subtle grid background */}
+          <div className="absolute inset-0 pointer-events-none opacity-[0.03]"
+            style={{
+              backgroundImage: 'linear-gradient(rgba(34, 197, 94, 0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(34, 197, 94, 0.5) 1px, transparent 1px)',
+              backgroundSize: '20px 20px'
+            }}
+          />
         </div>
       )}
     </div>
