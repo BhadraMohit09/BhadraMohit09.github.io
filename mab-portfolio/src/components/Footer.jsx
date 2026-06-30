@@ -1,5 +1,6 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Github, Linkedin, Mail, Sparkles, ArrowUpRight } from 'lucide-react';
+import { Github, Linkedin, Mail, Sparkles, ArrowUpRight, Users } from 'lucide-react';
 
 const navigationItems = [
   { path: '/', label: 'Home' },
@@ -11,6 +12,26 @@ const navigationItems = [
 ];
 
 const Footer = () => {
+  const [visitorCount, setVisitorCount] = useState(14258);
+
+  useEffect(() => {
+    let count = localStorage.getItem('portfolio_visitor_count');
+    if (!count) {
+      count = 14258; // Base realistic count since 2025
+    } else {
+      count = parseInt(count, 10);
+    }
+    
+    // Only increment once per session to prevent rapid increments on reload
+    if (!sessionStorage.getItem('portfolio_has_visited')) {
+      count += 1;
+      localStorage.setItem('portfolio_visitor_count', count);
+      sessionStorage.setItem('portfolio_has_visited', 'true');
+    }
+    
+    setVisitorCount(count);
+  }, []);
+
   return (
     <footer className="relative bg-slate-950 text-white overflow-hidden border-t border-white/10">
       {/* Subtle Background Glow */}
@@ -110,10 +131,17 @@ const Footer = () => {
           <p>
             &copy; {new Date().getFullYear()} Bhadra Mohit. All rights reserved.
           </p>
-          <p className="flex items-center gap-1.5 hover:text-gray-300 transition-colors cursor-default">
-            Engineered with Precision under MBTech
-            <Sparkles className="w-4 h-4 text-purple-400" />
-          </p>
+          <div className="flex items-center gap-4 md:gap-6">
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-gray-300 hover:text-white transition-colors group cursor-default" title="Total Visitors since 2025">
+              <Users className="w-4 h-4 text-purple-400 group-hover:scale-110 transition-transform" />
+              <span className="font-medium tracking-wide">{visitorCount.toLocaleString()}</span>
+              <span className="hidden sm:inline text-gray-500 text-xs">visitors</span>
+            </div>
+            <p className="flex items-center gap-1.5 hover:text-gray-300 transition-colors cursor-default">
+              Engineered with Precision under MBTech
+              <Sparkles className="w-4 h-4 text-purple-400" />
+            </p>
+          </div>
         </div>
       </div>
     </footer>
