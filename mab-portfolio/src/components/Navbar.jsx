@@ -82,16 +82,16 @@ const Navbar = () => {
 
   return (
     <>
-      <nav
-        ref={menuRef}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          isScrolled
-            ? 'bg-slate-950/35 backdrop-blur-2xl border-b border-white/[0.15] shadow-2xl shadow-purple-950/40 py-2.5'
-            : 'bg-transparent border-b border-transparent py-4'
-        }`}
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
+      <div className="fixed top-0 left-0 right-0 z-50 flex justify-center p-4 pointer-events-none">
+        <nav
+          ref={menuRef}
+          className={`pointer-events-auto transition-all duration-500 rounded-2xl w-full max-w-5xl border ${
+            isScrolled
+              ? 'bg-slate-950/60 backdrop-blur-xl border-white/[0.15] shadow-2xl shadow-purple-950/40 py-2.5 px-4'
+              : 'bg-slate-950/30 backdrop-blur-md border-white/[0.08] shadow-lg py-3 px-4'
+          }`}
+        >
+          <div className="flex justify-between items-center h-12">
 
             {/* ── Logo ── */}
             <Link to="/" className="flex items-center gap-2.5 group flex-shrink-0">
@@ -225,10 +225,12 @@ const Navbar = () => {
                   Open to freelance & full-time roles
                 </div>
               </div>
+              </div>
             </div>
           </div>
         </div>
-      </nav>
+        </nav>
+      </div>
     </>
   );
 };
