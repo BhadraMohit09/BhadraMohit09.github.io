@@ -177,7 +177,6 @@ const Navbar = () => {
               </button>
             </div>
           </div>
-        </div>
 
         {/* ── Mobile Drawer ── */}
         <div
@@ -224,7 +223,6 @@ const Navbar = () => {
                   </span>
                   Open to freelance & full-time roles
                 </div>
-              </div>
               </div>
             </div>
           </div>
