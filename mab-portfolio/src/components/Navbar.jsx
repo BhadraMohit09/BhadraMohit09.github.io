@@ -85,10 +85,10 @@ const Navbar = () => {
       <div className="fixed top-0 left-0 right-0 z-50 flex justify-center p-4 pointer-events-none">
         <nav
           ref={menuRef}
-          className={`pointer-events-auto transition-all duration-500 rounded-2xl w-full max-w-5xl border ${
+          className={`pointer-events-auto transition-all duration-500 rounded-2xl w-full max-w-5xl ${
             isScrolled
-              ? 'bg-slate-950/60 backdrop-blur-xl border-white/[0.15] shadow-2xl shadow-purple-950/40 py-2.5 px-4'
-              : 'bg-slate-950/30 backdrop-blur-md border-white/[0.08] shadow-lg py-3 px-4'
+              ? 'bg-transparent backdrop-blur-sm shadow-xl py-2.5 px-4 border border-white/[0.05]'
+              : 'bg-transparent py-3 px-4 border border-transparent'
           }`}
         >
           <div className="flex justify-between items-center h-12">

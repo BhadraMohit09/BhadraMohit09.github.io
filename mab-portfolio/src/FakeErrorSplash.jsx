@@ -8,6 +8,7 @@ const FakeErrorSplash = ({
   errorCode = "SUCC_CONNECTION_OPENED",
 }) => {
   const [show, setShow] = useState(true);
+  const [isFinished, setIsFinished] = useState(false);
   const [progress, setProgress] = useState(0);
   const [scrollY, setScrollY] = useState(0);
 
@@ -41,7 +42,8 @@ const FakeErrorSplash = ({
   useEffect(() => {
     if (delay > 0) {
       const t = setTimeout(() => setShow(false), delay);
-      return () => clearTimeout(t);
+      const t2 = setTimeout(() => setIsFinished(true), delay + 1000);
+      return () => { clearTimeout(t); clearTimeout(t2); };
     }
   }, [delay]);
 
@@ -61,7 +63,7 @@ const FakeErrorSplash = ({
     <div className="relative">
       {/* Main content */}
       <div 
-        className={`transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] origin-top ${
+        className={isFinished ? "" : `transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] origin-top ${
           show ? "opacity-0 scale-95 blur-md pointer-events-none h-screen overflow-hidden" : "opacity-100 scale-100 blur-0"
         }`}
       >
